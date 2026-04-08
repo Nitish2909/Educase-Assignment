@@ -7,4 +7,7 @@ export default defineConfig({
   plugins: [react(),
   tailwindcss()
   ],
+     server:{
+    allowedHosts:['popx-5t1g.onrender.com/']
+  }
 })
