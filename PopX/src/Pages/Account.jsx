@@ -16,7 +16,7 @@ const Account = () => {
   return (
     <div className="bg-blue-400 min-h-screen flex items-center justify-center ">
       <div className="min-h-screen flex items-center justify-center bg-[#f7f8f8] px-4">
-        <div className=" w-full max-w-sm flex flex-col">
+        <div className=" w-full max-w-sm flex flex-col mb-70">
           <div className="text-xl font-semibold shadow-xs p-4 bg-white ">
             Account Settings
           </div>
