@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import profile from "../assets/profile.png";
 import camera from "../assets/camera.png";
 
 const Account = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("currentUser");
+
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
   return (
     <div className="bg-blue-400 min-h-screen flex items-center justify-center ">
       <div className="min-h-screen flex items-center justify-center bg-[#f7f8f8] px-4">
@@ -24,8 +34,10 @@ const Account = () => {
                 </div>
               </div>
               <div>
-                <p className="font-semibold">Marry Doe</p>
-                <p className="text-gray-600 text-xs">Marry@Gmail.Com</p>
+                <p className="font-bold">{user?.fullName || "No Name"}</p>
+                <p className="text-gray-600 text-xl">
+                  {user?.email || "No Email"}
+                </p>
               </div>
             </div>
             <p className="font-semibold text-gray-600">

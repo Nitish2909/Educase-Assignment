@@ -21,6 +21,9 @@ const Login = () => {
     // Check email and password
     if (user.email === email && user.password === password) {
       setError("");
+
+      // saved logged-in user
+      localStorage.setItem("currentUser", JSON.stringify(user));
       navigate("/account"); // Navigate to Account page
     } else {
       setError("Invalid email or password");

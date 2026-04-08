@@ -49,6 +49,8 @@ const Signup = () => {
       setErrors({});
       // Save to localStorage
       localStorage.setItem("signupData", JSON.stringify(formData));
+
+      localStorage.setItem("currentUser", JSON.stringify(formData));
       setSuccessMessage("Account created successfully!");
       
        navigate("/account");
