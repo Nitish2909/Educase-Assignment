@@ -4,14 +4,39 @@ import camera from "../assets/camera.png";
 
 const Account = () => {
   const [user, setUser] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("currentUser");
 
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+      setImage(parsedUser.profileImage); // load saved image
     }
   }, []);
+
+  //handle Image upload
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+
+        // Save image in localStorage
+        const updatedUser = {
+          ...user,
+          profileImage: reader.result,
+        };
+
+        localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+        setUser(updatedUser);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="bg-blue-400 min-h-screen flex items-center justify-center ">
@@ -25,13 +50,27 @@ const Account = () => {
             <div className="flex gap-2 py-4">
               <div className="relative">
                 <img
-                  src={profile}
+                  src={image || profile}
                   alt="Profile"
                   className="w-16 h-16 rounded-full"
                 />
-                <div className="absolute bottom-0 rounded-full p-1 bg-[#6c25ff] right-2">
-                  <img src={camera} alt="Camera" className="w-3 invert h-3" />
-                </div>
+
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  id="uploadImage"
+                />
+
+                {/* Camera Button */}
+                <label
+                  htmlFor="uploadImage"
+                  className="absolute bottom-0 right-0 bg-purple-700 p-1 rounded-full cursor-pointer"
+                >
+                  <img src={camera} alt="Camera" className="w-3 h-3 invert" />
+                </label>
               </div>
               <div>
                 <p className="font-bold">{user?.fullName || "No Name"}</p>
